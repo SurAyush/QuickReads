@@ -1,6 +1,14 @@
 from transformers import pipeline
 import re
 import csv
+import psycopg2
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+# Connection string
+connection_string = os.getenv("DATABASE_URL")
 
 # loading my fine-tuned T5 model from Hugging Face Hub
 hub_model_id = 'SurAyush/news-summarizer-t5'
@@ -27,14 +35,38 @@ def capitalize_sentences(text):
 
     return result
 
-csv_file = 'sample_news.csv'
-new_csv_file = 'summarized_news.csv'
+# temporary CSV file: storing  the scraped news artcile
+csv_file = 'temporary_data.csv'
 
-with open(csv_file, 'r') as f:
-    reader = csv.reader(f)  # Create a CSV reader object
+try:
+    # Connect to the database
+    conn = psycopg2.connect(connection_string)
+    print("Connected to PostgreSQL successfully!")
     
-    for row in reader:  # Iterate through rows
-        summary = summarize_text(row[2]) 
-        with open(new_csv_file, "a") as file:
-            writer = csv.writer(file)
-            writer.writerow([row[0], row[1], summary])  # Append data
+    # Create a cursor object to execute SQL commands
+    cur = conn.cursor()
+
+    insert_query = """
+    INSERT INTO news_with_summary (heading, article, summary) 
+    VALUES (%s, %s, %s);
+    """
+
+    with open(csv_file, 'r') as f:
+
+        reader = csv.reader(f)  
+
+        for row in reader:
+            summary = summarize_text(row[2]) 
+            data = (row[1], row[2], summary)
+            cur.execute(insert_query, data)
+
+
+    conn.commit()  # Commit the transaction
+    cur.close()
+    conn.close()
+    print("Connection closed.")
+    if os.path.exists(csv_file):
+        os.remove(csv_file)
+
+except Exception as e:
+    print(e)
