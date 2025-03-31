@@ -77,7 +77,7 @@ if home_page is not None:
                 # temporarily storing in a csv file
                 with open(csv_file, "a", newline="") as file:
                     writer = csv.writer(file)
-                    writer.writerow([today, artcile_heading, article_content])          # Append data
+                    writer.writerow([today, artcile_heading, article_text])          # Append data
 
         except Exception as e:
             print('Error in scraping article')
