@@ -21,6 +21,7 @@ def summarize_text(text, min_length=30):
     Summarizes the given text using the fine-tuned T5 model."
     """
     summary = summarizer(text, min_length=min_length)
+    
     return capitalize_sentences(summary[0]['summary_text'])
 
 def capitalize_sentences(text):
@@ -47,8 +48,8 @@ try:
     cur = conn.cursor()
 
     insert_query = """
-    INSERT INTO news_with_summary (heading, article, summary) 
-    VALUES (%s, %s, %s);
+    INSERT INTO news_with_summary (heading, article, summary, tag) 
+    VALUES (%s, %s, %s, %s);
     """
 
     with open(csv_file, 'r') as f:
@@ -56,8 +57,9 @@ try:
         reader = csv.reader(f)  
 
         for row in reader:
-            summary = summarize_text(row[2]) 
-            data = (row[1], row[2], summary)
+            print(row[2])
+            summary = summarize_text(row[3]) 
+            data = (row[2], row[3], summary, row[1])
             cur.execute(insert_query, data)
 
 
