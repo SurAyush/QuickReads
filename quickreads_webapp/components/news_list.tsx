@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "@/components/navbar";
 
-
 interface Article {
     id: number;
     category: string;
@@ -27,13 +26,13 @@ const categories = ['TOP NEWS', 'INDIA', 'WORLD', 'REAL ESTATE', 'ENTERTAINMENT'
 
 export default function NewsList({articles}: {articles: Article[]}) {
     const [mounted, setMounted] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedCategory, setSelectedCategory] = useState("ALL");
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  const filteredArticles = selectedCategory === "All" 
+  const filteredArticles = selectedCategory === "ALL" 
     ? articles 
     : (articles).filter(article => article.category === selectedCategory);
 
@@ -67,9 +66,9 @@ export default function NewsList({articles}: {articles: Article[]}) {
   return (
     <main className="min-h-screen bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        
-        <Navbar/>
 
+        <Navbar/>
+        
         {/* Categories */}
         <div className="flex flex-wrap gap-2 mb-8">
           {categories.map((category) => (

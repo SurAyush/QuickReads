@@ -1,5 +1,7 @@
 "use server";
 import NewsList from "@/components/news_list";
+import Navbar from "@/components/navbar";
+import Footer from "@/components/footer";
 
 interface Article {
   id: number;
@@ -14,5 +16,8 @@ async function getArticles(): Promise<Article[]> {
 }
 export default async function Home() {
   const articles = await getArticles();
-  return <NewsList  articles={articles} />;
+  return <>
+    <NewsList  articles={articles} />
+    <Footer/>
+  </>;
 }

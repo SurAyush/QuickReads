@@ -3,8 +3,15 @@ import {query} from "@/lib/db";
 
 export async function GET(request: NextRequest) {
     try{
-        const body = await request.json();
-        const date = body.date;
+        const { searchParams } = new URL(request.url);
+        const date = searchParams.get("date");
+
+        if (!date) {
+        return new Response(JSON.stringify({ error: "Date parameter is required" }), { status: 400 });
+        }
+
+        console.log("Fetching articles for date:", date);
+
         const q = `SELECT id, heading AS title, tag AS category, summary AS description
                     FROM news_with_summary
                     WHERE DATE(timestamp) = $1;
