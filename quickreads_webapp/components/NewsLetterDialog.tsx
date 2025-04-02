@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -13,7 +14,8 @@ export function NewsletterDialog() {
 
   const handleVerify = async () => {
     if (email && email.includes("@")) {
-      const verify = await fetch("http://localhost/api/verify", {
+      setShowOTP(true);
+      const verify = await fetch("http://localhost:3000/api/verify", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -21,7 +23,6 @@ export function NewsletterDialog() {
         body: JSON.stringify({ email: email }),
       });
       if (verify.status === 200) {
-        setShowOTP(true);
         toast.success("Verification code sent to your email!");
       }
     } else {
@@ -31,7 +32,7 @@ export function NewsletterDialog() {
 
   const handleSubscribe = async () => {
     if (otp.length === 6) {
-      const subsribe = await fetch("http://localhost/api/subscribe", {
+      const subsribe = await fetch("http://localhost:3000/api/subscribe", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -41,8 +42,11 @@ export function NewsletterDialog() {
       if(subsribe.status === 200) {
         toast.success("Successfully subscribed to newsletter!");
       }
+      else if(subsribe.status===409){
+        toast.success("Email ID already subscribed!");
+      }
       else{
-        toast.error("Failed to subscribe. Please try again.");
+        toast.error("Invalid OTP!");
       }
       setOpen(false);
       setShowOTP(false);

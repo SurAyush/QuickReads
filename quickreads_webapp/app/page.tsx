@@ -9,7 +9,7 @@ interface Article {
 }
 
 async function getArticles(): Promise<Article[]> {
-  const res = await fetch("http://localhost:3000/api/all_news", { next: { revalidate: 3600 } }); // Replace with your API
+  const res = await fetch("http://localhost:3000/api/news_today", { next: { revalidate: 3600 } }); // Replace with your API
   return res.json();
 }
 export default async function Home() {
