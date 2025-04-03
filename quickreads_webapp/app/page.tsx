@@ -1,7 +1,5 @@
 "use server";
-import NewsList from "@/components/news_list";
-import Navbar from "@/components/navbar";
-import Footer from "@/components/footer";
+import NewsList from "@/components/News_list";
 
 interface Article {
   id: number;
@@ -11,13 +9,24 @@ interface Article {
 }
 
 async function getArticles(): Promise<Article[]> {
-  const res = await fetch("http://localhost:3000/api/news_today", { next: { revalidate: 3600 } }); // Replace with your API
-  return res.json();
+  try{
+    const res = await fetch( `${process.env.NEXT_PUBLIC_API_URL}/news_today`, { next: { revalidate: 3600 } }); // Replace with your API
+    if(res.status === 200){ 
+      return res.json();
+    }
+    else{
+      return [];
+    }
+  }
+  catch(e){
+    console.log(e);
+    return []; // Return an empty array in case of error
+  }
 }
+
 export default async function Home() {
   const articles = await getArticles();
   return <>
-    <NewsList  articles={articles} />
-    <Footer/>
+    <NewsList  articles={articles} date={null}/>
   </>;
 }

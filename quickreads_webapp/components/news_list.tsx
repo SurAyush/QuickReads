@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import Navbar from "@/components/navbar";
+import Navbar from "@/components/Navbar";
 
 interface Article {
     id: number;
@@ -24,8 +24,9 @@ const categoryColors: Record<string, { bg: string; text: string; border: string 
 
 const categories = ['TOP NEWS', 'INDIA', 'WORLD', 'REAL ESTATE', 'ENTERTAINMENT', 'BUSINESS', 'SPORTS', 'TECHNOLOGY']
 
-export default function NewsList({articles}: {articles: Article[]}) {
-    const [mounted, setMounted] = useState(false);
+export default function NewsList({articles, date}: {articles: Article[], date: string|null}) {
+    
+  const [mounted, setMounted] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("ALL");
 
   useEffect(() => {
@@ -63,11 +64,22 @@ export default function NewsList({articles}: {articles: Article[]}) {
     };
   };
 
+  if(articles.length === 0) {
+return (
+      <main className="min-h-screen bg-background">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <Navbar date={date}/>
+          <h1 className="text-2xl font-bold mb-4">No articles available for {date}</h1>
+        </div>
+      </main>
+    );
+  }
+
   return (
     <main className="min-h-screen bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
-        <Navbar/>
+        <Navbar date={date}/>
         
         {/* Categories */}
         <div className="flex flex-wrap gap-2 mb-8">

@@ -7,7 +7,15 @@ export async function GET(request: NextRequest) {
         const date = searchParams.get("date");
 
         if (!date) {
-        return new Response(JSON.stringify({ error: "Date parameter is required" }), { status: 400 });
+            return NextResponse.json({ error: "Date parameter is required" }, { status: 400 });
+        }
+
+        if (date === "favicon.ico") {
+            return NextResponse.json({ error: "Invalid date" }, { status: 400 });
+        }
+        
+        if (!date || isNaN(Date.parse(date))) {
+            return NextResponse.json({ error: "Invalid date" }, { status: 400 });
         }
 
         console.log("Fetching articles for date:", date);

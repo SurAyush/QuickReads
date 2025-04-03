@@ -3,6 +3,7 @@
 import * as React from "react";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
+import { useRouter } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -15,6 +16,15 @@ import {
 
 export function DatePicker() {
   const [date, setDate] = React.useState<Date>();
+  const router = useRouter();
+
+  const handleDateSelect = (selectedDate: Date | undefined) => {
+    setDate(selectedDate);
+    if (selectedDate) {
+      const formattedDate = format(selectedDate, 'yyyy-MM-dd');
+      router.push(`/${formattedDate}`);
+    }
+  };
 
   return (
     <Popover>
@@ -22,7 +32,7 @@ export function DatePicker() {
         <Button
           variant="outline"
           className={cn(
-            "w-10 h-10 p-0",
+            "w-10 h-10 p-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground",
             !date && "text-muted-foreground"
           )}
         >
@@ -34,9 +44,9 @@ export function DatePicker() {
         <Calendar
           mode="single"
           selected={date}
-          onSelect={setDate}
+          onSelect={handleDateSelect}
           initialFocus
-          className="rounded-md border"
+          className="rounded-md border bg-background"
         />
       </PopoverContent>
     </Popover>
