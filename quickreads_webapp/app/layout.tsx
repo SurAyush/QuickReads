@@ -10,6 +10,9 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   title: 'QuickReads - Your Daily News Digest',
   description: 'Stay informed with the latest news across technology, science, environment, and more.',
+  icons:{
+    icon: '/favicon.ico',
+  }
 };
 
 export default function RootLayout({

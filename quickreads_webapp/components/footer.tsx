@@ -9,13 +9,13 @@ export default function Footer() {
           <div>
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2">
-              <li><Link href="https://github.com/SurAyush" className="text-muted-foreground hover:text-primary">About Us</Link></li>
+              <li><Link href="https://github.com/SurAyush/QuickReads" className="text-muted-foreground hover:text-primary">About Project</Link></li>
             </ul>
           </div>
           <div>
             <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
             <div className="flex space-x-4">
-              <Link href="https://github.com/SurAyush" className="text-muted-foreground hover:text-primary">
+              <Link href="https://github.com/SurAyush/" className="text-muted-foreground hover:text-primary">
                 <Github className="h-6 w-6" />
               </Link>
               <Link href="https://www.linkedin.com/in/ayush-sur-6222b0291/" className="text-muted-foreground hover:text-primary">

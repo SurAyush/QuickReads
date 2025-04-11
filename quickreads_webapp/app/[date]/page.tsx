@@ -10,7 +10,7 @@ interface Article {
 
 async function getArticles(date: string): Promise<Article[]> {
   try{
-    const res = await fetch( `${process.env.NEXT_PUBLIC_API_URL}/news_dated?date=${date}`, { next: { revalidate: 3600 } }); // Replace with your API
+    const res = await fetch( `${process.env.NEXT_PUBLIC_API_URL}/news_dated?date=${date}`, { next: { revalidate: 3600 } }); 
     if(res.status === 200){
       return res.json();
     }

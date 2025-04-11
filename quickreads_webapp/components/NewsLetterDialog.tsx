@@ -15,7 +15,7 @@ export function NewsletterDialog() {
   const handleVerify = async () => {
     if (email && email.includes("@")) {
       setShowOTP(true);
-      const verify = await fetch("http://localhost:3000/api/verify", {
+      const verify = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/verify`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -32,7 +32,7 @@ export function NewsletterDialog() {
 
   const handleSubscribe = async () => {
     if (otp.length === 6) {
-      const subsribe = await fetch("http://localhost:3000/api/subscribe", {
+      const subsribe = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/subscribe`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
