@@ -1,5 +1,6 @@
-"use server";
 import NewsList from "@/components/News_list";
+
+export const dynamic = "force-dynamic";
 
 interface Article {
   id: number;
