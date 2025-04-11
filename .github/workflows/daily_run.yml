@@ -28,9 +28,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt               
 
-      - name: Scraping
-        working-directory: scrape_and_summarize
-        run: python scraping.py
+      # - name: Scraping
+      #   working-directory: scrape_and_summarize
+      #   run: python scraping.py
 
       - name: Summarization
         working-directory: scrape_and_summarize
