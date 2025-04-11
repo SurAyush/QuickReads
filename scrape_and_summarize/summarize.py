@@ -5,7 +5,10 @@ import psycopg2
 import os
 from dotenv import load_dotenv
 
-load_dotenv()
+# Development
+if os.getenv("GITHUB_ACTIONS") != "true":
+    from dotenv import load_dotenv
+    load_dotenv()
 
 # Connection string
 connection_string = os.getenv("DATABASE_URL")

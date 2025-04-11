@@ -1,0 +1,38 @@
+name: Daily Scrape and Summarize News
+
+on:
+  schedule:
+    # Runs every day at 6:00 AM IST (Indian Standard Time)
+    # minutes hours day-of-month month day-of-week
+    - cron: '30 0 * * *'     # Indian Standard Time (IST) : UTC - 5:30:   6:00 AM  
+  workflow_dispatch:     # manual checks
+
+# cron jobs
+jobs:
+  run-scripts:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository         # loads repo on VM
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12.4'     # python version used in myenv 
+
+      - name: Install dependencies
+        working-directory: scrape_and_summarize
+        # simply installing requirements.txt without activating myenv
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt               
+
+      - name: Scraping
+        working-directory: scrape_and_summarize
+        run: python scraping.py
+
+      - name: Summarization
+        working-directory: scrape_and_summarize
+        run: python summarize.py
+        # add secrets to GitHub 
