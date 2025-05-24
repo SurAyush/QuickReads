@@ -115,6 +115,8 @@ Find the workflow at:
 
 - ROUGE Score: 20+ on the test set
 
+- Prefix Strategy: The model was fine-tuned **without task-specific prefixes** (e.g., "summarize:"), as suggested by the original [T5 paper](https://arxiv.org/abs/1910.10683).
+
 - Model Hosting: Hugging Face Hub
 
 Check out the training notebook for further details...
