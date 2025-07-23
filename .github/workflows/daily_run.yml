@@ -4,7 +4,7 @@ on:
   schedule:
     # Runs every day at 6:00 AM IST (Indian Standard Time)
     # minutes hours day-of-month month day-of-week
-    - cron: '30 0 * * *'     # Indian Standard Time (IST) : UTC - 5:30:   6:00 AM  
+    - cron: '30 0 * * *'     # Indian Standard Time (IST) : UTC + 5:30:   6:00 AM  
   workflow_dispatch:     # manual checks
 
 # cron jobs
